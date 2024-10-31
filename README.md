@@ -11,13 +11,3 @@ To enable persistant storage, put something like the following path into persist
 ```
 /mnt/kasm_profiles/{image_id}/{username}
 ```
-
-# Currently included changes
-## All images
- - python
- - rust
- - zsh (oh-my-zsh)
-
-## Ubuntu
- - Wireguard
- - 1password (amd64 only)

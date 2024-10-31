@@ -1,4 +1,4 @@
-name: Build other
+name: Build Other Branches
 
 on:
   push:
@@ -23,32 +23,47 @@ jobs:
           ref: ${{ github.ref }}
           path: "."
           ext: ".Dockerfile"
-  Build:
+
+  build:
     needs: list-files
+     
+    permissions:
+      packages: write
+      contents: read
+      
     strategy:
       matrix:
         version: ['1.16.0']
         paths: ${{ fromJson(needs.list-files.outputs.paths) }}
+
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: Free disk space
         run: chmod +x ./scripts/cleanup.sh && ./scripts/cleanup.sh
+
       - name: Check disk space
         run: chmod +x ./scripts/check-space.sh && ./scripts/check-space.sh
+
       - name: get image info
         run: |
           echo "IMAGENAME=${{ matrix.paths }}" | sed 's/\.\///g' | sed 's/\.[^.]*$//' >>${GITHUB_ENV}
           sed -i "s/%VER%/${{ matrix.version }}/" ${{ matrix.paths }}
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+
       - name: Log in to registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
@@ -57,3 +72,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: false
           tags: ghcr.io/dmptrluke/kasm-workspace-${{ env.IMAGENAME }}:${{ matrix.version }}-${{github.event.number}}
+          cache-from: type=registry,ref=ghcr.io/dmptrluke/kasm-workspace-${{ env.IMAGENAME }}:${{ matrix.version }}
+          cache-to: type=inline
