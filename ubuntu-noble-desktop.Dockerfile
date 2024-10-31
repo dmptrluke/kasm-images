@@ -9,6 +9,9 @@ WORKDIR $HOME
 
 ## START CUSTOMISATION
 
+# Add .zshrc
+COPY .zshrc $HOME
+
 # Install Software
 RUN apt-get update && apt-get install -y dbus dbus-broker dnsutils iputils-ping wget zsh git curl zoxide fzf bat
 
@@ -39,6 +42,7 @@ RUN if [ "$TARGETARCH" = "amd64" ]; then \
 
 # Set Default Shell
 RUN usermod -s /bin/zsh kasm-user
+
 
 ######### End Customizations ###########
 
