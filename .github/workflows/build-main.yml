@@ -42,6 +42,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Free disk space
+        run: chmod +x ./scripts/cleanup.sh && ./scripts/cleanup.sh
+
+      - name: Check disk space
+        run: chmod +x ./scripts/check-space.sh && ./scripts/check-space.sh
+
       - name: get image info
         run: |
           echo "IMAGENAME=${{ matrix.paths }}" | sed 's/\.\///g' | sed 's/\.[^.]*$//' >>${GITHUB_ENV}
@@ -61,7 +67,7 @@ jobs:
         with:
           context: .
           file: ${{ matrix.paths }}
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           push: true
           tags: ghcr.io/dmptrluke/kasm-workspace-${{ env.IMAGENAME }}:${{ matrix.version }}
           cache-from: type=registry,ref=ghcr.io/dmptrluke/kasm-workspace-${{ env.IMAGENAME }}:${{ matrix.version }}
