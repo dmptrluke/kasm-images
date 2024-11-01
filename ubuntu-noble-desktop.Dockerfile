@@ -9,11 +9,8 @@ WORKDIR $HOME
 
 ## START CUSTOMISATION
 
-# Add .zshrc
-COPY .zshrc $HOME
-
 # Install Software
-RUN apt-get update && apt-get install -y dbus dbus-broker dnsutils iputils-ping wget zsh git curl zoxide fzf bat
+RUN apt-get update && apt-get install -y dbus dbus-broker dnsutils iputils-ping wget zsh git curl zoxide fzf bat python3-pip python3-bs4 python3-venv
 
 # Install Rust
 WORKDIR /tmp
@@ -37,12 +34,14 @@ RUN set -eux; \
 
 # Install 1Password
 RUN if [ "$TARGETARCH" = "amd64" ]; then \ 
-    wget https://downloads.1password.com/linux/debian/amd64/stable/1password-latest.deb && sudo apt install ./1password-latest.deb -y; \
+    wget https://downloads.1password.com/linux/debian/amd64/stable/1password-latest.deb && sudo apt install ./1password-latest.deb -y && rm -f 1password-latest.deb; \
     fi
 
 # Set Default Shell
 RUN usermod -s /bin/zsh kasm-user
 
+# Add .zshrc
+COPY files/.zshrc $HOME
 
 ######### End Customizations ###########
 

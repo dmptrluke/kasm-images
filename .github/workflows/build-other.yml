@@ -69,7 +69,7 @@ jobs:
         with:
           context: .
           file: ${{ matrix.paths }}
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           push: false
           tags: ghcr.io/dmptrluke/kasm-workspace-${{ env.IMAGENAME }}:${{ matrix.version }}-${{github.event.number}}
           cache-from: type=registry,ref=ghcr.io/dmptrluke/kasm-workspace-${{ env.IMAGENAME }}:${{ matrix.version }}
