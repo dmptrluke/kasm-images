@@ -1,9 +1,6 @@
 declare -a fonts=(
   0xProto
-  DroidSansMono
   RobotoMono
-  Ubuntu
-  UbuntuMono
 )
 
 version=$(curl -s 'https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest' | jq -r '.name')

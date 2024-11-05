@@ -11,7 +11,7 @@ WORKDIR $HOME
 
 # Install Software
 
-RUN apt-get update && apt-get install -y dbus dbus-broker dnsutils iputils-ping wget zsh git curl zoxide fzf bat python3-pip python3-bs4 python3-venv thunar-archive-plugin jq
+RUN apt-get update && apt-get install -y dbus dbus-broker dnsutils iputils-ping wget zsh git curl zoxide fzf bat python3-pip python3-bs4 python3-venv thunar-archive-plugin jq && rm -rf /var/cache/apt/archives /var/lib/apt/lists/*
 
 # Install fonts
 COPY ./src/install_fonts.sh $INST_SCRIPTS/fonts/
