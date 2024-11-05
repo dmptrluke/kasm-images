@@ -43,7 +43,8 @@ RUN set -eux; \
 
 # Install 1Password
 RUN if [ "$TARGETARCH" = "amd64" ]; then \ 
-    wget https://downloads.1password.com/linux/debian/amd64/stable/1password-latest.deb && sudo apt install ./1password-latest.deb -y && rm -f 1password-latest.deb; \
+    wget https://downloads.1password.com/linux/debian/amd64/stable/1password-latest.deb && \
+    dpkg -i ./1password-latest.deb && rm -f 1password-latest.deb; \
     fi
 
 # Set default shell
