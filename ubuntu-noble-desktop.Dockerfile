@@ -14,7 +14,7 @@ RUN apt-get update && \
     apt-get install -y \ 
     dbus dbus-broker dnsutils iputils-ping wget zsh git curl \
     zoxide fzf bat python3-pip python3-bs4 python3-venv \
-    thunar-archive-plugin jq && \
+    thunar-archive-plugin jq gnupg2 && \
     rm -rf /var/cache/apt/archives /var/lib/apt/lists/*
 
 # Install fonts
