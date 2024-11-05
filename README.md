@@ -5,6 +5,8 @@ Custom Kasm Workspaces images with added tools and software I find useful.
 * 1Password
 * Python Libraries
 * Rust
-* ZSH, zoxide, and other CLI tools
+* Nerd Fonts (OxProto, RobotoMono)
+* thunar-archive-plugin
+* ZSH, zoxide, jq, and other CLI tools
 
 Based on [bySimpson/kasm-workspace-images](https://github.com/bySimpson/kasm-workspace-images).

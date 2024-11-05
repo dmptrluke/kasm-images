@@ -9,9 +9,13 @@ WORKDIR $HOME
 
 ## START CUSTOMISATION
 
-# Install Software
-
-RUN apt-get update && apt-get install -y dbus dbus-broker dnsutils iputils-ping wget zsh git curl zoxide fzf bat python3-pip python3-bs4 python3-venv thunar-archive-plugin jq && rm -rf /var/cache/apt/archives /var/lib/apt/lists/*
+# Install software
+RUN apt-get update && \
+    apt-get install -y \ 
+    dbus dbus-broker dnsutils iputils-ping wget zsh git curl \
+    zoxide fzf bat python3-pip python3-bs4 python3-venv \
+    thunar-archive-plugin jq && \
+    rm -rf /var/cache/apt/archives /var/lib/apt/lists/*
 
 # Install fonts
 COPY ./src/install_fonts.sh $INST_SCRIPTS/fonts/
@@ -42,7 +46,7 @@ RUN if [ "$TARGETARCH" = "amd64" ]; then \
     wget https://downloads.1password.com/linux/debian/amd64/stable/1password-latest.deb && sudo apt install ./1password-latest.deb -y && rm -f 1password-latest.deb; \
     fi
 
-# Set Default Shell
+# Set default shell
 RUN usermod -s /bin/zsh kasm-user
 
 # Add .zshrc
