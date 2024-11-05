@@ -10,7 +10,12 @@ WORKDIR $HOME
 ## START CUSTOMISATION
 
 # Install Software
-RUN apt-get update && apt-get install -y dbus dbus-broker dnsutils iputils-ping wget zsh git curl zoxide fzf bat python3-pip python3-bs4 python3-venv thunar-archive-plugin
+
+RUN apt-get update && apt-get install -y dbus dbus-broker dnsutils iputils-ping wget zsh git curl zoxide fzf bat python3-pip python3-bs4 python3-venv thunar-archive-plugin jq
+
+# Install fonts
+COPY ./files/install_fonts.sh $INST_SCRIPTS/fonts
+RUN bash $INST_SCRIPTS/fonts/install_fonts.sh && rm -rf $INST_SCRIPTS/fonts/
 
 # Install Rust
 WORKDIR /tmp
@@ -41,7 +46,7 @@ RUN if [ "$TARGETARCH" = "amd64" ]; then \
 RUN usermod -s /bin/zsh kasm-user
 
 # Add .zshrc
-COPY files/.zshrc $HOME
+COPY ./src/.zshrc $HOME
 
 ######### End Customizations ###########
 
