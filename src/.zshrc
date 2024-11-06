@@ -34,7 +34,7 @@ setopt PROMPT_SUBST
 
 COLOUR_THEME=blue
 
-PROMPT='%F{${COLOUR_THEME}}%B%K{${COLOUR_THEME}} %F{white}%K{${COLOUR_THEME}}%B%n@%m%b%F{${COLOUR_THEME}}%k█▓▒%b%k%f$(__git_ps1) %% '
+PROMPT='%F{${COLOUR_THEME}}%B%K{${COLOUR_THEME}} %F{white}%K{${COLOUR_THEME}}%B%n%b%F{${COLOUR_THEME}}%k█▓▒%b%k%f$(__git_ps1) %% '
 RPROMPT="%F{${COLOUR_THEME}}%B%~/%b%k%f"
 
 # Aliases

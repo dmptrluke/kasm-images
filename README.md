@@ -6,6 +6,7 @@ Custom Kasm Workspaces images with added tools and software I find useful.
 * Python Libraries
 * Rust
 * Nerd Fonts (OxProto, RobotoMono)
+* XArchiver
 * thunar-archive-plugin
 * ZSH, zoxide, jq, and other CLI tools
 
