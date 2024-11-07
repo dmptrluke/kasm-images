@@ -48,7 +48,7 @@ RUN if [ "$TARGETARCH" = "amd64" ]; then \
     fi
 
 # Set default shell
-RUN usermod -s /bin/zsh kasm-user
+RUN chsh -s /bin/zsh kasm-user
 
 # Add .zshrc
 COPY ./src/.zshrc $HOME
