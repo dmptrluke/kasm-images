@@ -11,15 +11,18 @@ WORKDIR $HOME
 
 # Install software
 RUN apt-get update && \
-    apt-get install -y \ 
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     dbus dbus-broker dnsutils iputils-ping wget zsh git curl \
     zoxide fzf bat python3-pip python3-bs4 python3-venv \
-    thunar-archive-plugin jq gnupg2 xfce4-taskmanager && \
-    rm -rf /var/cache/apt/archives /var/lib/apt/lists/*
+    thunar-archive-plugin jq gnupg2 xfce4-taskmanager \
+    unzip ca-certificates && \
+    apt-get clean && \
+    rm -rf /var/cache/apt/archives /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install fonts
 COPY ./src/install_fonts.sh $INST_SCRIPTS/fonts/
-RUN bash $INST_SCRIPTS/fonts/install_fonts.sh && rm -rf $INST_SCRIPTS/fonts/
+RUN bash $INST_SCRIPTS/fonts/install_fonts.sh && \
+    rm -rf $INST_SCRIPTS/fonts/ /tmp/*
 
 # Install Rust
 WORKDIR /tmp
@@ -32,19 +35,21 @@ ENV RUSTUP_HOME=/usr/local/rustup \
 RUN set -eux; \
     \
     url="https://sh.rustup.rs"; \
-    wget "$url" -O rustup-init; \
+    wget -q "$url" -O rustup-init; \
     chmod +x rustup-init; \
-    ./rustup-init -y --no-modify-path; \
+    ./rustup-init -y --no-modify-path --default-toolchain stable; \
     rm rustup-init; \
     chmod -R a+w $RUSTUP_HOME $CARGO_HOME; \
     rustup --version; \
     cargo --version; \
-    rustc --version;
+    rustc --version; \
+    rm -rf /tmp/*
 
 # Install 1Password
-RUN if [ "$TARGETARCH" = "amd64" ]; then \ 
-    wget https://downloads.1password.com/linux/debian/amd64/stable/1password-latest.deb && \
-    dpkg -i ./1password-latest.deb && rm -f 1password-latest.deb; \
+RUN if [ "$TARGETARCH" = "amd64" ]; then \
+    wget -q https://downloads.1password.com/linux/debian/amd64/stable/1password-latest.deb && \
+    dpkg -i ./1password-latest.deb || apt-get install -f -y && \
+    rm -f 1password-latest.deb; \
     fi
 
 # Set default shell

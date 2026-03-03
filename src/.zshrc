@@ -30,11 +30,17 @@ bindkey "${terminfo[kcud1]}" history-beginning-search-forward-end
 # Set up prompt
 setopt PROMPT_SUBST
 
-. /usr/lib/git-core/git-sh-prompt
+# Source git prompt if available
+if [ -f /usr/lib/git-core/git-sh-prompt ]; then
+    . /usr/lib/git-core/git-sh-prompt
+    GIT_PROMPT='$(__git_ps1)'
+else
+    GIT_PROMPT=''
+fi
 
 COLOUR_THEME=blue
 
-PROMPT='%F{${COLOUR_THEME}}%B%K{${COLOUR_THEME}} %F{white}%K{${COLOUR_THEME}}%B%n%b%F{${COLOUR_THEME}}%k█▓▒%b%k%f$(__git_ps1) %% '
+PROMPT='%F{${COLOUR_THEME}}%B%K{${COLOUR_THEME}} %F{white}%K{${COLOUR_THEME}}%B%n%b%F{${COLOUR_THEME}}%k█▓▒%b%k%f${GIT_PROMPT} %% '
 RPROMPT="%F{${COLOUR_THEME}}%B%~/%b%k%f"
 
 # Aliases
@@ -50,7 +56,9 @@ alias fd='fdfind'
 alias bat='batcat'
 
 # initalise zoxide
-eval "$(zoxide init zsh)"
+if command -v zoxide >/dev/null 2>&1; then
+    eval "$(zoxide init zsh)"
+fi
 
 # include global .zshrc
 [ -f /etc/zshrc ] && source /etc/zshrc

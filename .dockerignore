@@ -1,0 +1,16 @@
+# Git files
+.git
+.gitignore
+.github
+
+# Documentation
+README.md
+LICENSE
+
+# Scripts not needed in container
+scripts/
+
+# Temporary files
+*.tmp
+*.log
+.DS_Store

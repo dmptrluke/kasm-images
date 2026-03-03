@@ -26,11 +26,11 @@ jobs:
 
   build:
     needs: list-files
-     
+
     permissions:
       packages: write
       contents: read
-      
+
     strategy:
       matrix:
         version: ['1.17.0', '1.18.0']
