@@ -1,3 +1,5 @@
+# runs on the github actions runner - clears out a bunch of things
+# we don't need so we have more room to build our giant image
 sudo docker rmi $(docker image ls -aq) >/dev/null 2>&1 || true
 sudo rm -rf \
 /usr/share/dotnet /usr/local/lib/android /opt/ghc \
