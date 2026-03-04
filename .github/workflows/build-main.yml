@@ -46,12 +46,12 @@ jobs:
         uses: BRAINSia/free-disk-space@v2
         with:
           tool-cache: false
-          mandb: true
+          mandb: false
           android: true
           dotnet: true
           haskell: true
-          large-packages: true
-          docker-images: true
+          large-packages: false
+          docker-images: false
           swap-storage: true
 
       - name: get image info
