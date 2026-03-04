@@ -42,8 +42,17 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Free disk space
-        run: chmod +x ./scripts/cleanup.sh && ./scripts/cleanup.sh
+      - name: Free Disk Space (Ubuntu)
+        uses: BRAINSia/free-disk-space@v2
+        with:
+          tool-cache: false
+          mandb: true
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
 
       - name: get image info
         run: |
@@ -68,4 +77,5 @@ jobs:
           push: true
           tags: ghcr.io/dmptrluke/kasm-workspace-${{ env.IMAGENAME }}:${{ matrix.version }}
           cache-from: type=registry,ref=ghcr.io/dmptrluke/kasm-workspace-${{ env.IMAGENAME }}:${{ matrix.version }}
+
           cache-to: type=inline
